@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+ <%- include('./partials/head') %>
+<body>
+    <%- include('./partials/nav') %>
+        <div class="details content">
+            <h2><%= blog.title %></h2>
+            <div>
+                <p><%= blog.body %></p>
+            </div>
+            <a class="delete"  data-doc="<%= blog._id %>">delete</a>
+        </div>
+    <%- include('./partials/footer') %>
+    <script>
+        const trashCan = document.querySelector('a.delete')
+        
+        trashCan.addEventListener('click', (event)=>{
+            event.preventDefault();
+            const endPoint = `/blogs/${trashCan.dataset.doc}`;
+            // This is an AJAX request hence why we cannot redirect in the appejs
+            fetch(endPoint,{
+                method:'DELETE',
+            })
+            .then(response => response.json())
+            .then(data => window.location.href = data.redirect)
+            .catch(err => console.log(err));
+            // .then((response)=> response.json())// response gotten from the appejs delete request
+            // .then((data)=>{
+            //     window.location.href = data.redirect; // this is the redirect data received from the node delete in appejs
+            // })
+            // .catch((error)=>{
+            //     console.log('error')
+            // })
+        })
+        
+
+    </script>
+</body>
+</html>
