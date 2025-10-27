@@ -1,9 +1,9 @@
-
+require("dotenv").config();
 const express = require('express')
 const morgan = require ('morgan')
 const mongoose = require('mongoose')
 const blogRoutes = require('./routes/blogRoutes')
-
+const PORT = process.env.PORT || 3000;
 
 //---Express APP---//
 
@@ -11,9 +11,9 @@ const app = express()
 
 //--Connect to MongoDB--//
 
-const dbURI = 'mongodb+srv://blackhost:Oluwasikemi90@blackhost.ixu4thu.mongodb.net/BlackBlog'
-mongoose.connect(dbURI).then((result)=>{
-    app.listen(3000)
+
+mongoose.connect(process.env.dbURI).then((result)=>{
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 })
 .catch((error)=>{
     console.log(error)
